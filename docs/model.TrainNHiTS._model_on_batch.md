@@ -1,1 +1,1 @@
-::: src.model.TrainNBeats._model_on_batch
+::: src.model.TrainNHiTS._model_on_batch
