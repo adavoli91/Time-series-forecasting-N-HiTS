@@ -1,0 +1,5 @@
+{
+  'data': {'len_input': 100, 'horizon_forecast': 20, 'size_train': 0.8, 'size_valid': 0.2},
+  'model': {'stack_1': {'kernel_size_pool': 16, 'expr_ratio_m1': 16}, 'stack_2': {'kernel_size_pool': 4, 'expr_ratio_m1': 4},
+            'stack_3': {'kernel_size_pool': 1, 'expr_ratio_m1': 1}, 'n_neur_hidden': 200, 'frac_dropout': 0.2, 'stride_maxpool': 1},
+  'training': {'batch_size': 256, 'n_epochs': 500, 'patience': 50, 'min_delta_loss_perc': 0.01}}
