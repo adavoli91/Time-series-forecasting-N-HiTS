@@ -37,24 +37,24 @@ class Block(torch.nn.Module):
         self.dense_theta_f = torch.nn.Linear(in_features = n_neur_hidden, out_features = self.dim_theta_f, bias = False)
         
     def forward(self, x):
-        x = x.reshape(x.shape[0], -1)
         y = self.max_pool(x)
         #
-        y = self.dense_hid_1(y)
-        y = self.batch_norm_1(y)
+        y = self.dense_hid_1(y).transpose(1, 2)
+        y = self.batch_norm_1(y).transpose(1, 2)
         y = self.relu(y)
         y = self.dropout(y)
-        y = self.dense_hid_2(y)
-        y = self.batch_norm_2(y)
+        y = self.dense_hid_2(y).transpose(1, 2)
+        y = self.batch_norm_2(y).transpose(1, 2)
         y = self.relu(y)
         y = self.dropout(y)
         # compute theta's
         theta_b = self.dense_theta_b(y)
         theta_f = self.dense_theta_f(y)
         # compute backcast
-        x_hat = theta_b.reshape(*theta_b.shape, 1)
+        x_hat = theta_b
         # compute forecast
-        y_hat = torch.nn.functional.interpolate(input = theta_f.reshape(*theta_f.shape, 1).transpose(1, 2), size = self.horizon_forecast).transpose(1, 2)
+        y_hat = torch.nn.functional.interpolate(input = theta_f, size = self.horizon_forecast)
+        y_hat = y_hat[:, :1, :]
         #
         return x_hat, y_hat
 
